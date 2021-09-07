@@ -14,18 +14,35 @@ services:
       - TZ=Europe/Amsterdam
     networks:
      - mqtt
-     - hass
   homeassistant:
     container_name: homeassistant
     image: homeassistant/raspberrypi3-homeassistant:2021.9.0
     volumes:
-      - /homeassistant:/config
+      - hass_data:/config
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
+    expose:
+      - 80:8123
     depends_on:
       - "zigbee2mqtt"
     networks:
      - hass
+     - mqtt
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.12
+    volumes:
+      - hass_data:/config
+      - /etc/localtime:/etc/localtime:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    restart: always
+    expose:
+      - 80:8123
+    depends_on:
+      - "zigbee2mqtt"
+    networks:
+     - mqtt
   telegraf:
     container_name: telegraf
     image: telegraf:1.18.1
@@ -40,3 +57,8 @@ services:
 networks:
   hass:
   mqtt:
+
+volumes:
+  hass_data:
+  mosquitto_log:
+  mosquitto_data:
