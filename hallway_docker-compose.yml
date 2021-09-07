@@ -1,0 +1,42 @@
+version: '3'
+services:
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:1.19.1
+    volumes:
+      - ./zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    restart: always
+    privileged: true
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+     - mqtt
+     - hass
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/raspberrypi3-homeassistant:2021.9.0
+    volumes:
+      - /homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    depends_on:
+      - "zigbee2mqtt"
+    networks:
+     - hass
+  telegraf:
+    container_name: telegraf
+    image: telegraf:1.18.1
+    depends_on:
+      - "zigbee2mqtt"
+    volumes:
+      - ./telegraf_pi.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf:/telegraf
+    restart: always
+    networks:
+     - mqtt
+networks:
+  hass:
+  mqtt:
