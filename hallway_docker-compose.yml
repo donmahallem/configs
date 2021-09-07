@@ -24,7 +24,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     expose:
-      - 80:8123
+      - 8123:8123
     depends_on:
       - "zigbee2mqtt"
     networks:
@@ -39,6 +39,9 @@ services:
       - mosquitto_data:/mosquitto/data
       - mosquitto_log:/mosquitto/log
     restart: always
+    expose:
+      - 1883:1883
+      - 9001:9001
     networks:
       - mqtt
   telegraf:
