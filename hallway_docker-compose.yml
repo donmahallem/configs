@@ -10,6 +10,8 @@ services:
       - /dev/ttyACM0:/dev/ttyACM0
     restart: always
     privileged: true
+    depends_on:
+      - mosquitto
     environment:
       - TZ=Europe/Amsterdam
     networks:
@@ -26,8 +28,8 @@ services:
     depends_on:
       - "zigbee2mqtt"
     networks:
-     - hass
-     - mqtt
+      - hass
+      - mqtt
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto:2.0.12
@@ -42,7 +44,7 @@ services:
     depends_on:
       - "zigbee2mqtt"
     networks:
-     - mqtt
+      - mqtt
   telegraf:
     container_name: telegraf
     image: telegraf:1.18.1
@@ -53,7 +55,7 @@ services:
       - ./telegraf:/telegraf
     restart: always
     networks:
-     - mqtt
+      - mqtt
 networks:
   hass:
   mqtt:
