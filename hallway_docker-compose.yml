@@ -34,8 +34,7 @@ services:
     container_name: mosquitto
     image: eclipse-mosquitto:2.0.12
     volumes:
-      - hass_data:/config
-      - /etc/localtime:/etc/localtime:ro
+      - mosquitto_config:/mosquitto/config
       - mosquitto_data:/mosquitto/data
       - mosquitto_log:/mosquitto/log
     restart: always
@@ -63,4 +62,5 @@ volumes:
   hass_data:
   mosquitto_log:
   mosquitto_data:
+  mosquitto_config:
   telegraf_data:
