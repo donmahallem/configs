@@ -51,7 +51,7 @@ services:
       - "zigbee2mqtt"
     volumes:
       - ./telegraf_pi.conf:/etc/telegraf/telegraf.conf:ro
-      - ./telegraf:/telegraf
+      - telegraf_data:/telegraf
     restart: always
     networks:
       - mqtt
@@ -63,3 +63,4 @@ volumes:
   hass_data:
   mosquitto_log:
   mosquitto_data:
+  telegraf_data:
