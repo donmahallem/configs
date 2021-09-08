@@ -23,7 +23,7 @@ services:
       - hass_data:/config
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
-    expose:
+    ports:
       - 8123:8123
     depends_on:
       - "zigbee2mqtt"
@@ -39,7 +39,7 @@ services:
       - mosquitto_data:/mosquitto/data
       - mosquitto_log:/mosquitto/log
     restart: always
-    expose:
+    ports:
       - 1883:1883
       - 9001:9001
     networks:
