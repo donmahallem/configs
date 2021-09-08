@@ -18,7 +18,7 @@ services:
      - mqtt
   homeassistant:
     container_name: homeassistant
-    image: homeassistant/raspberrypi4-homeassistant:2021.9.0
+    image: homeassistant/raspberrypi4-homeassistant:2021.6.6
     volumes:
       - hass_data:/config
       - /etc/localtime:/etc/localtime:ro
