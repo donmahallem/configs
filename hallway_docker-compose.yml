@@ -20,6 +20,8 @@ services:
     cap_add:
       - NET_ADMIN
     restart: always
+    networks:
+     - pihole
   zigbee2mqtt:
     container_name: zigbee2mqtt
     image: koenkk/zigbee2mqtt:1.19.1
@@ -80,6 +82,7 @@ services:
 networks:
   hass:
   mqtt:
+  pihole:
 
 volumes:
   hass_data:
