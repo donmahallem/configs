@@ -1,27 +1,5 @@
 version: '3'
 services:
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:v5.8.1
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      # - "67:67/udp"
-      - "80:80/tcp"
-    environment:
-      TZ: 'Europe/Berlin'
-      # WEBPASSWORD: 'set a secure password here or it will be random'
-    # Volumes store your data between container upgrades
-    volumes:
-      - pihole_data:/etc/pihole/
-      - pihole_dnsmasq:/etc/dnsmasq.d/
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
-    restart: always
-    networks:
-     - pihole
   zigbee2mqtt:
     container_name: zigbee2mqtt
     image: koenkk/zigbee2mqtt:1.19.1
