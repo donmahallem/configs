@@ -60,7 +60,6 @@ services:
 networks:
   hass:
   mqtt:
-  pihole:
 
 volumes:
   hass_data:
@@ -68,5 +67,3 @@ volumes:
   mosquitto_data:
   mosquitto_config:
   telegraf_data:
-  pihole_data:
-  pihole_dnsmasq:
