@@ -57,10 +57,33 @@ services:
     restart: always
     networks:
       - mqtt
+  telegraf_pihole:
+    image: telegraf:1.20.3-alpine
+    restart: unless-stopped
+    hostname: telegraf_pihole
+    env_file:
+      - telegraf_pihole.env
+    networks:
+      - telegraf_pihole
+    configs:
+      - source: telegraf_pihole_config
+        target: /etc/telegraf/telegraf.conf
+        uid: 'telegraf'
+        gid: 'telegraf'
+        mode: 0600
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
 networks:
   hass:
   mqtt:
+  telegraf_pihole:
+    name: telegraf_pihole
 
+configs:
+  telegraf_pihole_config:
+    file: ./telegraf_pihole.conf
 volumes:
   hass_data:
   mosquitto_log:
