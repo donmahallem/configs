@@ -65,7 +65,7 @@ services:
       - telegraf_pihole.env
     networks:
       - telegraf_pihole
-    configs:
+    secrets:
       - source: telegraf_pihole_config
         target: /etc/telegraf/telegraf.conf
         uid: 'telegraf'
@@ -81,7 +81,7 @@ networks:
   telegraf_pihole:
     name: telegraf_pihole
 
-configs:
+secrets:
   telegraf_pihole_config:
     file: ./telegraf_pihole.conf
 volumes:
