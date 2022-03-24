@@ -7,7 +7,7 @@ services:
       - ./zigbee2mqtt:/app/data
       - /run/udev:/run/udev:ro
     devices:
-      - /dev/ttyUSB0:/dev/ttyACM0
+      - /dev/ttyACM0:/dev/ttyACM0
     ports:
       - 8080:8080
     restart: always
@@ -32,6 +32,18 @@ services:
     networks:
       - hass
       - mqtt
+  nginx:
+    container_name: nginx
+    image: nginx:1.21.6-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx_log:/etc/nginx/logs
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - hass
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto:2.0.12
@@ -89,6 +101,7 @@ secrets:
 volumes:
   hass_data:
   mosquitto_log:
+  nginx_log:
   mosquitto_data:
   mosquitto_config:
   telegraf_data:
